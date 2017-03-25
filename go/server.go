@@ -40,6 +40,6 @@ func Serve() {
 	}
 }
 
-func main(){
+func main() {
 	Serve()
 }
