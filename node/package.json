@@ -1,0 +1,11 @@
+{
+  "name": "grpc-errors",
+  "version": "1.0.0",
+  "description": "A handy guide to gRPC errors (in Node)",
+  "author": "Avinash Sajjanshetty",
+  "license": "MIT",
+  "dependencies": {
+    "google-protobuf": "^3.2.0",
+    "grpc": "^1.2.0",
+  }
+}
