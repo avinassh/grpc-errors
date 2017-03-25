@@ -1,0 +1,21 @@
+syntax = "proto3";
+package avinassh.hello;
+
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/avinassh/grpc-errors/go/hello";
+
+service HelloService {
+    rpc SayHello(HelloReq) returns (HelloResp) {};
+    // Strict Version responds only to requests which have `Name` length
+    // less than 10 characters
+    rpc SayHelloStrict(HelloReq) returns (HelloResp);
+}
+
+message HelloReq {
+    string Name = 1;
+}
+
+message HelloResp {
+    string Result = 1;
+}
