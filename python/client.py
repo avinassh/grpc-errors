@@ -26,6 +26,10 @@ def run():
         print(status_code.name)
         # should print `(3, 'invalid argument')`
         print(status_code.value)
+        # want to do some specific action based on the error?
+        if grpc.StatusCode.INVALID_ARGUMENT == status_code:
+            # do your stuff here
+            pass
     else:
         print(response.Result)
 
