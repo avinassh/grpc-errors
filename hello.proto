@@ -1,7 +1,6 @@
 syntax = "proto3";
-package avinassh.hello;
-
-option go_package = "github.com/avinassh/grpc-errors/go/hello";
+// for Golang
+package hello;
 
 service HelloService {
     // This thing just says Hello to anyone

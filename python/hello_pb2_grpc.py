@@ -15,12 +15,12 @@ class HelloServiceStub(object):
       channel: A grpc.Channel.
     """
     self.SayHello = channel.unary_unary(
-        '/avinassh.hello.HelloService/SayHello',
+        '/hello.HelloService/SayHello',
         request_serializer=hello__pb2.HelloReq.SerializeToString,
         response_deserializer=hello__pb2.HelloResp.FromString,
         )
     self.SayHelloStrict = channel.unary_unary(
-        '/avinassh.hello.HelloService/SayHelloStrict',
+        '/hello.HelloService/SayHelloStrict',
         request_serializer=hello__pb2.HelloReq.SerializeToString,
         response_deserializer=hello__pb2.HelloResp.FromString,
         )
@@ -29,6 +29,9 @@ class HelloServiceStub(object):
 class HelloServiceServicer(object):
 
   def SayHello(self, request, context):
+    """This thing just says Hello to anyone
+    SayHello('Euler') -> Hello, Euler!
+    """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
@@ -56,5 +59,5 @@ def add_HelloServiceServicer_to_server(servicer, server):
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
-      'avinassh.hello.HelloService', rpc_method_handlers)
+      'hello.HelloService', rpc_method_handlers)
   server.add_generic_rpc_handlers((generic_handler,))

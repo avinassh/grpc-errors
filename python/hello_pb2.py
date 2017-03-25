@@ -17,9 +17,9 @@ _sym_db = _symbol_database.Default()
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='hello.proto',
-  package='avinassh.hello',
+  package='hello',
   syntax='proto3',
-  serialized_pb=_b('\n\x0bhello.proto\x12\x0e\x61vinassh.hello\"\x18\n\x08HelloReq\x12\x0c\n\x04Name\x18\x01 \x01(\t\"\x1b\n\tHelloResp\x12\x0e\n\x06Result\x18\x01 \x01(\t2\x9a\x01\n\x0cHelloService\x12\x41\n\x08SayHello\x12\x18.avinassh.hello.HelloReq\x1a\x19.avinassh.hello.HelloResp\"\x00\x12G\n\x0eSayHelloStrict\x12\x18.avinassh.hello.HelloReq\x1a\x19.avinassh.hello.HelloResp\"\x00\x42*Z(github.com/avinassh/grpc-errors/go/hellob\x06proto3')
+  serialized_pb=_b('\n\x0bhello.proto\x12\x05hello\"\x18\n\x08HelloReq\x12\x0c\n\x04Name\x18\x01 \x01(\t\"\x1b\n\tHelloResp\x12\x0e\n\x06Result\x18\x01 \x01(\t2v\n\x0cHelloService\x12/\n\x08SayHello\x12\x0f.hello.HelloReq\x1a\x10.hello.HelloResp\"\x00\x12\x35\n\x0eSayHelloStrict\x12\x0f.hello.HelloReq\x1a\x10.hello.HelloResp\"\x00\x62\x06proto3')
 )
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -28,13 +28,13 @@ _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 _HELLOREQ = _descriptor.Descriptor(
   name='HelloReq',
-  full_name='avinassh.hello.HelloReq',
+  full_name='hello.HelloReq',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='Name', full_name='avinassh.hello.HelloReq.Name', index=0,
+      name='Name', full_name='hello.HelloReq.Name', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -52,20 +52,20 @@ _HELLOREQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=31,
-  serialized_end=55,
+  serialized_start=22,
+  serialized_end=46,
 )
 
 
 _HELLORESP = _descriptor.Descriptor(
   name='HelloResp',
-  full_name='avinassh.hello.HelloResp',
+  full_name='hello.HelloResp',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='Result', full_name='avinassh.hello.HelloResp.Result', index=0,
+      name='Result', full_name='hello.HelloResp.Result', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -83,8 +83,8 @@ _HELLORESP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=57,
-  serialized_end=84,
+  serialized_start=48,
+  serialized_end=75,
 )
 
 DESCRIPTOR.message_types_by_name['HelloReq'] = _HELLOREQ
@@ -93,20 +93,18 @@ DESCRIPTOR.message_types_by_name['HelloResp'] = _HELLORESP
 HelloReq = _reflection.GeneratedProtocolMessageType('HelloReq', (_message.Message,), dict(
   DESCRIPTOR = _HELLOREQ,
   __module__ = 'hello_pb2'
-  # @@protoc_insertion_point(class_scope:avinassh.hello.HelloReq)
+  # @@protoc_insertion_point(class_scope:hello.HelloReq)
   ))
 _sym_db.RegisterMessage(HelloReq)
 
 HelloResp = _reflection.GeneratedProtocolMessageType('HelloResp', (_message.Message,), dict(
   DESCRIPTOR = _HELLORESP,
   __module__ = 'hello_pb2'
-  # @@protoc_insertion_point(class_scope:avinassh.hello.HelloResp)
+  # @@protoc_insertion_point(class_scope:hello.HelloResp)
   ))
 _sym_db.RegisterMessage(HelloResp)
 
 
-DESCRIPTOR.has_options = True
-DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z(github.com/avinassh/grpc-errors/go/hello'))
 try:
   # THESE ELEMENTS WILL BE DEPRECATED.
   # Please use the generated *_pb2_grpc.py files instead.
@@ -126,12 +124,12 @@ try:
         channel: A grpc.Channel.
       """
       self.SayHello = channel.unary_unary(
-          '/avinassh.hello.HelloService/SayHello',
+          '/hello.HelloService/SayHello',
           request_serializer=HelloReq.SerializeToString,
           response_deserializer=HelloResp.FromString,
           )
       self.SayHelloStrict = channel.unary_unary(
-          '/avinassh.hello.HelloService/SayHelloStrict',
+          '/hello.HelloService/SayHelloStrict',
           request_serializer=HelloReq.SerializeToString,
           response_deserializer=HelloResp.FromString,
           )
@@ -140,6 +138,9 @@ try:
   class HelloServiceServicer(object):
 
     def SayHello(self, request, context):
+      """This thing just says Hello to anyone
+      SayHello('Euler') -> Hello, Euler!
+      """
       context.set_code(grpc.StatusCode.UNIMPLEMENTED)
       context.set_details('Method not implemented!')
       raise NotImplementedError('Method not implemented!')
@@ -167,7 +168,7 @@ try:
         ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-        'avinassh.hello.HelloService', rpc_method_handlers)
+        'hello.HelloService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
@@ -178,6 +179,9 @@ try:
     file not marked beta) for all further purposes. This class was generated
     only to ease transition from grpcio<0.15.0 to grpcio>=0.15.0."""
     def SayHello(self, request, context):
+      """This thing just says Hello to anyone
+      SayHello('Euler') -> Hello, Euler!
+      """
       context.code(beta_interfaces.StatusCode.UNIMPLEMENTED)
     def SayHelloStrict(self, request, context):
       """Strict Version responds only to requests which have `Name` length
@@ -193,6 +197,9 @@ try:
     file not marked beta) for all further purposes. This class was generated
     only to ease transition from grpcio<0.15.0 to grpcio>=0.15.0."""
     def SayHello(self, request, timeout, metadata=None, with_call=False, protocol_options=None):
+      """This thing just says Hello to anyone
+      SayHello('Euler') -> Hello, Euler!
+      """
       raise NotImplementedError()
     SayHello.future = None
     def SayHelloStrict(self, request, timeout, metadata=None, with_call=False, protocol_options=None):
@@ -210,16 +217,16 @@ try:
     file not marked beta) for all further purposes. This function was
     generated only to ease transition from grpcio<0.15.0 to grpcio>=0.15.0"""
     request_deserializers = {
-      ('avinassh.hello.HelloService', 'SayHello'): HelloReq.FromString,
-      ('avinassh.hello.HelloService', 'SayHelloStrict'): HelloReq.FromString,
+      ('hello.HelloService', 'SayHello'): HelloReq.FromString,
+      ('hello.HelloService', 'SayHelloStrict'): HelloReq.FromString,
     }
     response_serializers = {
-      ('avinassh.hello.HelloService', 'SayHello'): HelloResp.SerializeToString,
-      ('avinassh.hello.HelloService', 'SayHelloStrict'): HelloResp.SerializeToString,
+      ('hello.HelloService', 'SayHello'): HelloResp.SerializeToString,
+      ('hello.HelloService', 'SayHelloStrict'): HelloResp.SerializeToString,
     }
     method_implementations = {
-      ('avinassh.hello.HelloService', 'SayHello'): face_utilities.unary_unary_inline(servicer.SayHello),
-      ('avinassh.hello.HelloService', 'SayHelloStrict'): face_utilities.unary_unary_inline(servicer.SayHelloStrict),
+      ('hello.HelloService', 'SayHello'): face_utilities.unary_unary_inline(servicer.SayHello),
+      ('hello.HelloService', 'SayHelloStrict'): face_utilities.unary_unary_inline(servicer.SayHelloStrict),
     }
     server_options = beta_implementations.server_options(request_deserializers=request_deserializers, response_serializers=response_serializers, thread_pool=pool, thread_pool_size=pool_size, default_timeout=default_timeout, maximum_timeout=maximum_timeout)
     return beta_implementations.server(method_implementations, options=server_options)
@@ -232,19 +239,19 @@ try:
     file not marked beta) for all further purposes. This function was
     generated only to ease transition from grpcio<0.15.0 to grpcio>=0.15.0"""
     request_serializers = {
-      ('avinassh.hello.HelloService', 'SayHello'): HelloReq.SerializeToString,
-      ('avinassh.hello.HelloService', 'SayHelloStrict'): HelloReq.SerializeToString,
+      ('hello.HelloService', 'SayHello'): HelloReq.SerializeToString,
+      ('hello.HelloService', 'SayHelloStrict'): HelloReq.SerializeToString,
     }
     response_deserializers = {
-      ('avinassh.hello.HelloService', 'SayHello'): HelloResp.FromString,
-      ('avinassh.hello.HelloService', 'SayHelloStrict'): HelloResp.FromString,
+      ('hello.HelloService', 'SayHello'): HelloResp.FromString,
+      ('hello.HelloService', 'SayHelloStrict'): HelloResp.FromString,
     }
     cardinalities = {
       'SayHello': cardinality.Cardinality.UNARY_UNARY,
       'SayHelloStrict': cardinality.Cardinality.UNARY_UNARY,
     }
     stub_options = beta_implementations.stub_options(host=host, metadata_transformer=metadata_transformer, request_serializers=request_serializers, response_deserializers=response_deserializers, thread_pool=pool, thread_pool_size=pool_size)
-    return beta_implementations.dynamic_stub(channel, 'avinassh.hello.HelloService', cardinalities, options=stub_options)
+    return beta_implementations.dynamic_stub(channel, 'hello.HelloService', cardinalities, options=stub_options)
 except ImportError:
   pass
 # @@protoc_insertion_point(module_scope)
