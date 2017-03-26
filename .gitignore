@@ -4,6 +4,9 @@ bins
 gens
 libs
 objs
+*.o
+cpp/client
+cpp/server
 
 # Python items
 cython_debug/
