@@ -10,6 +10,7 @@ using grpc::Server;
 using grpc::ServerBuilder;
 using grpc::ServerContext;
 using grpc::Status;
+using grpc::StatusCode;
 using hello::HelloReq;
 using hello::HelloResp;
 using hello::HelloService;
@@ -24,16 +25,10 @@ class HelloServiceImpl final : public HelloService::Service {
 
   Status SayHelloStrict(ServerContext* context, const HelloReq* request,
                   HelloResp* reply) override {
-    // TODO: set errors
-    // check length of `request->name()`, if its equal or more than 10
-    // characters then send an error
-    // error status code: grpc.status.Invalid_Argument
-    // error message: Length of `Name` cannot be more than 10 characters
     std::string name(request->name());
     if (name.length() >= 10) {
-      // set errors here
-      // Status::Error Message
-      // Status::Error Code
+      std::string msg("Length of `Name` cannot be more than 10 characters");
+      return Status(StatusCode::INVALID_ARGUMENT, msg);
     }
     reply->set_result("Hey " + name + "!");
     return Status::OK;
