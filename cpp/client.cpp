@@ -9,6 +9,7 @@
 using grpc::Channel;
 using grpc::ClientContext;
 using grpc::Status;
+using grpc::StatusCode;
 using hello::HelloReq;
 using hello::HelloResp;
 using hello::HelloService;
@@ -48,7 +49,7 @@ class HelloServiceClient {
       // lets print the error code, which is 3
       std::cout << status.error_code() << std::endl;
       // want to do some specific action based on the error?
-      if(status.error_code() == grpc::StatusCode::INVALID_ARGUMENT) {
+      if(status.error_code() == StatusCode::INVALID_ARGUMENT) {
         // do your thing here
       }
       return;
