@@ -36,7 +36,7 @@ class HelloServiceClient {
     HelloResp response;
     ClientContext context;
 
-    Status status = stub_->SayHello(&context, request, &response);
+    Status status = stub_->SayHelloStrict(&context, request, &response);
 
     if (status.ok()) {
       return;
@@ -48,6 +48,9 @@ class HelloServiceClient {
       // lets print the error code, which is 3
       std::cout << status.error_code() << std::endl;
       // want to do some specific action based on the error?
+      if(status.error_code() == grpc::StatusCode::INVALID_ARGUMENT) {
+        // do your thing here
+      }
       return;
     }
   }
@@ -59,13 +62,10 @@ class HelloServiceClient {
 int main(int argc, char** argv) {
   HelloServiceClient client(grpc::CreateChannel(
       "localhost:50051", grpc::InsecureChannelCredentials()));
-  std::string name("Euler");
-  std::string reply = client.SayHello(name);
-  std::cout << reply << std::endl;
+  std::cout << client.SayHello("Euler") << std::endl;
 
   // the failing case
-  name = "Leonhard Euler";
-  client.SayHelloStrict(name);
+  client.SayHelloStrict("Leonhard Euler");
   
   return 0;
 }
