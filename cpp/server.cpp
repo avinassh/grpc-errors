@@ -18,8 +18,7 @@ class HelloServiceImpl final : public HelloService::Service {
 
   Status SayHello(ServerContext* context, const HelloReq* request,
                   HelloResp* reply) override {
-    std::string prefix("Hey ");
-    reply->set_result(prefix + request->name());
+    reply->set_result("Hey " + request->name() + "!");
     return Status::OK;
   }
 
@@ -36,8 +35,7 @@ class HelloServiceImpl final : public HelloService::Service {
       // Status::Error Message
       // Status::Error Code
     }
-    std::string prefix("Hey ");
-    reply->set_result(prefix + name);
+    reply->set_result("Hey " + name + "!");
     return Status::OK;
   }
 
