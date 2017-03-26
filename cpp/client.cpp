@@ -27,7 +27,7 @@ class HelloServiceClient {
     Status status = stub_->SayHello(&context, request, &response);
     // ideally you should check for errors here too before
     // returning the response
-    response.result();
+    return response.result();
   }
 
   void SayHelloStrict(const std::string& name) {
