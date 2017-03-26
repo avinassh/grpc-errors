@@ -4,8 +4,10 @@
 
     $ protoc -I ../ --cpp_out=. ../hello.proto
 
-    g++ -std=c++11 -I/usr/local/include -pthread -I/Users/avi/.tmp/delete/grpc/include -c -o hello.grpc.pb.o hello.grpc.pb.cc
+    $ g++ -std=c++11 -I/usr/local/include -pthread  -c -o client.o client.cpp
 
-    g++ -std=c++11 -I/usr/local/include -pthread -I/Users/avi/.tmp/delete/grpc/include -c -o server hello.grpc.pb.o hello.pb.o server.cpp
+    $ g++ hello.pb.o hello.grpc.pb.o client.o -L/usr/local/lib `pkg-config --libs grpc++ grpc` -lgrpc++_reflection -lprotobuf -lpthread -ldl -o client
 
-    g++ -std=c++11 -I/usr/local/include -pthread -I/Users/avi/.tmp/delete/grpc/include -c -o client hello.grpc.pb.o hello.pb.o client.cpp
+    $ g++ -std=c++11 -I/usr/local/include -pthread  -c -o server.o server.cpp
+
+    $ g++ hello.pb.o hello.grpc.pb.o server.o -L/usr/local/lib `pkg-config --libs grpc++ grpc` -lgrpc++_reflection -lprotobuf -lpthread -ldl -o server
