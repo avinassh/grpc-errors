@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		56264E6B9C61E097381643BB /* libPods-HelloClient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 14E06614B57B5E5E6B4092C2 /* libPods-HelloClient.a */; };
+		27CF15E22F19736F74915D10 /* Pods_HelloClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 745CAF7BC3F4726AC2851A27 /* Pods_HelloClient.framework */; };
 		825BE6141E8BAA6200A6E519 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825BE6131E8BAA6200A6E519 /* AppDelegate.swift */; };
 		825BE6161E8BAA6200A6E519 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825BE6151E8BAA6200A6E519 /* ViewController.swift */; };
 		825BE6191E8BAA6200A6E519 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 825BE6171E8BAA6200A6E519 /* Main.storyboard */; };
@@ -16,7 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		14E06614B57B5E5E6B4092C2 /* libPods-HelloClient.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HelloClient.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		745CAF7BC3F4726AC2851A27 /* Pods_HelloClient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HelloClient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E3C8787F4D8C2C49AB75039 /* Pods-HelloClient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HelloClient.release.xcconfig"; path = "Pods/Target Support Files/Pods-HelloClient/Pods-HelloClient.release.xcconfig"; sourceTree = "<group>"; };
 		825BE6101E8BAA6200A6E519 /* HelloClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		825BE6131E8BAA6200A6E519 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -33,7 +33,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				56264E6B9C61E097381643BB /* libPods-HelloClient.a in Frameworks */,
+				27CF15E22F19736F74915D10 /* Pods_HelloClient.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -43,7 +43,7 @@
 		1128C698162F00A6861AD0FB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				14E06614B57B5E5E6B4092C2 /* libPods-HelloClient.a */,
+				745CAF7BC3F4726AC2851A27 /* Pods_HelloClient.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -329,6 +329,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = im.avi.HelloClient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -341,6 +342,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = im.avi.HelloClient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -363,6 +365,7 @@
 				825BE6241E8BAA6200A6E519 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
