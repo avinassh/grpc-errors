@@ -36,5 +36,8 @@
     <Compile Include="Hello.cs" />
     <Compile Include="HelloGrpc.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
