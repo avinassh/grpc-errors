@@ -118,3 +118,10 @@ bazel-testlogs
 
 # Debug output
 gdb.txt
+
+# c sharp things
+*.userprefs
+*.csproj.user
+bin/
+obj/
+packages/
