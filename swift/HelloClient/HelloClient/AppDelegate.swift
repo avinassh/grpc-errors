@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  HelloClient
-//
-//  Created by avi on 29/03/17.
-//  Copyright © 2017 avi.im. All rights reserved.
-//
-
 import UIKit
 
 @UIApplicationMain
