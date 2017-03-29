@@ -4,7 +4,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProjectGuid>{1C6E2002-B032-4822-A725-3032FDAFD2B5}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>Hello</RootNamespace>
     <AssemblyName>Hello</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
