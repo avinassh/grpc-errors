@@ -7,6 +7,11 @@
 //
 
 import UIKit
+import GRPCClient
+import Hello
+import grpc
+
+let kHostAddress = "localhost:50051"
 
 class ViewController: UIViewController {
 
@@ -20,6 +25,18 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        GRPCCall.useInsecureConnectionsForHost(kHostAddress)
+        GRPCCall.setUserAgentPrefix("HelloWorld/1.0", forHost: kHostAddress)
+        let client = HelloService(host: kHostAddress)
+        let request = HelloReq()
+        
+        request.name = "Euler"
+        client.sayHelloWithRequest(request, handler: {(response: HelloResp?, error: NSError?) in
+            print("\(response!.result)")
+        })
+    }
 }
 
