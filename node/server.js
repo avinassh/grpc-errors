@@ -4,7 +4,7 @@ var grpc = require('grpc');
 var api = grpc.load(PROTO_PATH).hello;
 
 function sayHello(call, callback) {
-  callback(null, {Result: 'Hey ' + call.request.Name + '!'});
+  callback(null, {Result: 'Hey, ' + call.request.Name + '!'});
 }
 
 function sayHelloStrict(call, callback) {
@@ -14,7 +14,7 @@ function sayHelloStrict(call, callback) {
       message: "Length of `Name` cannot be more than 10 characters",
     });
   }
-  callback(null, {Result: 'Hey ' + call.request.Name + '!'});
+  callback(null, {Result: 'Hey, ' + call.request.Name + '!'});
 }
 
 function main() {

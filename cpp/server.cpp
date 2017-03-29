@@ -19,7 +19,7 @@ class HelloServiceImpl final : public HelloService::Service {
 
   Status SayHello(ServerContext* context, const HelloReq* request,
                   HelloResp* reply) override {
-    reply->set_result("Hey " + request->name() + "!");
+    reply->set_result("Hey, " + request->name() + "!");
     return Status::OK;
   }
 
@@ -30,7 +30,7 @@ class HelloServiceImpl final : public HelloService::Service {
       std::string msg("Length of `Name` cannot be more than 10 characters");
       return Status(StatusCode::INVALID_ARGUMENT, msg);
     }
-    reply->set_result("Hey " + name + "!");
+    reply->set_result("Hey, " + name + "!");
     return Status::OK;
   }
 

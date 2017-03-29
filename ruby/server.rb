@@ -9,7 +9,7 @@ require 'hello_services_pb'
 class HelloServer < Hello::HelloService::Service
 
   def say_hello(hello_req, _unused_call)
-    Hello::HelloResp.new(result: "Hey #{hello_req.name}!")
+    Hello::HelloResp.new(result: "Hey, #{hello_req.name}!")
   end
 
   def say_hello_strict(hello_req, _unused_call)
@@ -17,7 +17,7 @@ class HelloServer < Hello::HelloService::Service
         msg = 'Length of `Name` cannot be more than 10 characters'
         raise GRPC::BadStatus.new(GRPC::Core::StatusCodes::INVALID_ARGUMENT, msg)
     end
-    Hello::HelloResp.new(result: "Hey #{hello_req.name}!")
+    Hello::HelloResp.new(result: "Hey, #{hello_req.name}!")
   end
 
 end
