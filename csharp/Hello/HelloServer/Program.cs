@@ -9,7 +9,7 @@ namespace HelloServer
 	{
 		public override Task<HelloResp> SayHello(HelloReq request, ServerCallContext context)
 		{
-			return Task.FromResult(new HelloResp { Result = "Hey " + request.Name });
+			return Task.FromResult(new HelloResp { Result = "Hey, " + request.Name + "!"});
 		}
 
 		public override Task<HelloResp> SayHelloStrict(HelloReq request, ServerCallContext context)
@@ -18,7 +18,7 @@ namespace HelloServer
 				const string msg = "Length of `Name` cannot be more than 10 characters";
 				throw new RpcException(new Status(StatusCode.InvalidArgument, msg));	
 			}
-			return Task.FromResult(new HelloResp { Result = "Hey " + request.Name });
+			return Task.FromResult(new HelloResp { Result = "Hey, " + request.Name + "!"});
 		}
 	}
 
