@@ -4,6 +4,15 @@ gRPC is an amazing library, however, the documentation lacks details on error ha
 
 This project is my attempt to fix the issue. The [repository](https://github.com/avinassh/grpc-errors) contains examples in all popular languages and contain similar implementations of server and client across languages and also, error handling. So you can run server in one language of your choice and client in another, error handling still works seamlessly. The rest of this page shows how to send errors from server, handle them in client, in different languages.
 
+- [C++](#cpp)
+- [C#](#csharp)
+- [Go](#go)
+- [Node](#node)
+- [Objective C](#objective-c)
+- [Python](#python)
+- [Ruby](#ruby)
+- [Swift](#swift)
+
 ## CPP
 
 Check the complete example [here](https://github.com/avinassh/grpc-errors/tree/master/cpp).
