@@ -122,3 +122,100 @@ client.grpcMethod({...}, function(err, response) {
     err.code;
 });
 ```
+
+## Objective C
+
+Check the complete example [here](https://github.com/avinassh/grpc-errors/tree/master/objective-c).
+
+### Client
+
+To handle the error, check `error` returned from gRPC call:
+
+```obj-c
+[client grpcMethod:request handler:^(..., NSError *error) {
+    error.localizedDescription;
+    error.code;
+}];
+```
+
+## Python
+
+Check the complete example [here](https://github.com/avinassh/grpc-errors/tree/master/python).
+
+### Server
+
+To send an error, set `code` and `details` for `context` object:
+
+```python
+context.set_code(<grpc error code>)
+context.set_details(<error message>)
+```
+
+Example:
+
+```python
+def GRPCMethod(self, request, context):
+    context.set_details("Ouch!")
+    context.set_code(grpc.StatusCode.INVALID_ARGUMENT)
+    return response
+```
+
+### Client
+
+To handle the error, catch `grpc.RpcError` exception:
+
+```python
+try:
+    ...
+except grpc.RpcError as e:
+    e.details()
+    status_code = e.code()
+    status_code.name
+    status_code.value
+```
+
+## Ruby
+
+Check the complete example [here](https://github.com/avinassh/grpc-errors/tree/master/ruby).
+
+### Server
+
+To send an error, raise `GRPC::BadStatus` exception with `code` and `message` details:
+
+```ruby
+GRPC::BadStatus.new(<grpc error code>, <error message>)
+```
+
+Example:
+
+```ruby
+raise GRPC::BadStatus.new(GRPC::Core::StatusCodes::INVALID_ARGUMENT, "Ouch!")
+```
+
+### Client
+
+To handle the error, catch `GRPC::BadStatus` exception:
+
+```ruby
+begin
+  ...
+rescue GRPC::BadStatus => e
+  e.details
+  e.code
+end
+```
+
+## Swift
+
+Check the complete example [here](https://github.com/avinassh/grpc-errors/tree/master/swift).
+
+### Client
+
+To handle the error, check `error` returned from gRPC call:
+
+```swift
+client.grpcMethod(request, handler: { (..., error: NSError?) in
+    error.localizedDescription;
+    error.code;
+})
+```
