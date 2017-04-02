@@ -12,6 +12,11 @@ Check the [`hello.proto`](hello.proto) file to see the gRPC method definitions. 
 
 Each language directories have instructions to generate gRPC methods in respective languages. I assume that you have done the basic [tutorials](http://www.grpc.io/docs/quickstart/).
 
+## System Requirements
+    
+- [gRPC](https://github.com/grpc/grpc/blob/master/INSTALL.md)
+- [protobuf compiler](https://github.com/google/protobuf)
+
 ## License
 
 The mighty MIT license. Please check `LICENSE` for more details.

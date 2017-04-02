@@ -1,3 +1,14 @@
 # Node gRPC
 
-Generates protobuf JS APIs on the fly, no need to generate them.
+## Instructions
+
+In this example, protobuf JS APIs are generated on the fly, so no need to generate them.
+
+Install the dependencies:
+
+    $ npm install
+
+To run:
+
+    $ node server.js &
+    $ node client.js

@@ -1,6 +1,20 @@
 # Ruby gRPC
 
+## Instructions
+
+Install the dependencies:
+
+    $ gem install grpc
+    $ gem install grpc-tools
+
+Generate protobuf files:
+
     $ grpc_tools_ruby_protoc -I ../ --ruby_out=. --grpc_out=. ../hello.proto
+
+Run the server and client:
+
+    $ ruby server.rb &
+    $ ruby client.rb
 
 Note: 
 
