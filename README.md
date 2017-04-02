@@ -12,25 +12,25 @@ Check the complete example [here](https://github.com/avinassh/grpc-errors/tree/m
 
 To send an error, return an instance of `grpc::Status` with error message and code:
 
-    ```c++
-    Status(<grpc error code>, <error message>);
-    ```
+```c++
+Status(<grpc error code>, <error message>);
+```
 
 example:
 
-    ```c++
-    Status(StatusCode::INVALID_ARGUMENT, "Ouch!");
-    ```
+```c++
+Status(StatusCode::INVALID_ARGUMENT, "Ouch!");
+```
 
 ### Client
 
 To handle the error, check `error_code` and `error_message` members of `grpc::Status`:
 
-    ```c++
-    Status status = stub_->GRPCMethod(&context, request, &response);
-    status.error_message();
-    status.error_code();
-    ```
+```c++
+Status status = stub_->GRPCMethod(&context, request, &response);
+status.error_message();
+status.error_code();
+```
 
 ## CSharp
 
@@ -40,26 +40,26 @@ Check the complete example [here](https://github.com/avinassh/grpc-errors/tree/m
 
 To send an error, raise `RpcException` with error message and code:
 
-    ```c#
-    RpcException(new Status(<grpc error code>, <error message>));
-    ```
+```c#
+RpcException(new Status(<grpc error code>, <error message>));
+```
 
 Example:
 
-    ```c#
-    throw new RpcException(new Status(StatusCode.InvalidArgument, "Ouch!"));
-    ```
+```c#
+throw new RpcException(new Status(StatusCode.InvalidArgument, "Ouch!"));
+```
 
 ### Client
 
 To handle the error, catch `RpcException` and access its member `Status`:
 
-    ```c#
-    catch (RpcException e){
-        e.Status.Detail;
-        e.Status.StatusCode;
-    }
-    ```
+```c#
+catch (RpcException e){
+    e.Status.Detail;
+    e.Status.StatusCode;
+}
+```
 
 ## Go
 
@@ -69,24 +69,24 @@ Check the complete example [here](https://github.com/avinassh/grpc-errors/tree/m
 
 To send an error, return `grpc.Errorf` with error message and code:
 
-    ```go
-    grpc.Errorf(<grpc error code>, <error message>)
-    ```
+```go
+grpc.Errorf(<grpc error code>, <error message>)
+```
 
 Example:
 
-    ```go
-    return grpc.Errorf(codes.InvalidArgument, "Ouch!")
-    ```
+```go
+return grpc.Errorf(codes.InvalidArgument, "Ouch!")
+```
 
 ### Client
 
 To handle the error, check `error` returned from gRPC call:
 
-    ```go
-    _, err := client.GRPCMethod(...)
-    status_code := grpc.Code(err)
-    ```
+```go
+_, err := client.GRPCMethod(...)
+status_code := grpc.Code(err)
+```
 
 ## Node
 
@@ -96,29 +96,29 @@ Check the complete example [here](https://github.com/avinassh/grpc-errors/tree/m
 
 To send an error, return with `code` and `message`:
 
-    ```js
-    return callback({
-        code: <grpc error code>,
-        message: <error message>,
-    });
-    ```
+```js
+return callback({
+    code: <grpc error code>,
+    message: <error message>,
+});
+```
 
 Example:
 
-    ```js
-    return callback({
-        code: grpc.status.INVALID_ARGUMENT,
-        message: "Ouch!",
-    });
-    ```
+```js
+return callback({
+    code: grpc.status.INVALID_ARGUMENT,
+    message: "Ouch!",
+});
+```
 
 ### Client
 
 To handle the error, check `error` returned from gRPC call:
 
-    ```js
-    client.grpcMethod({...}, function(err, response) {
-        err.message;
-        err.code;
-    });
-    ```
+```js
+client.grpcMethod({...}, function(err, response) {
+    err.message;
+    err.code;
+});
+```
