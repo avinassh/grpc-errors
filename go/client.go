@@ -6,9 +6,10 @@ import (
 
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 
 	api "github.com/avinassh/grpc-errors/go/hello"
-	"google.golang.org/grpc/codes"
 )
 
 func main() {
@@ -36,16 +37,16 @@ func main() {
 		// ouch!
 		// lets print the gRPC error message
 		// which is "Length of `Name` cannot be more than 10 characters"
-		fmt.Println(grpc.ErrorDesc(err))
+		errStatus, _ := status.FromError(err)
+		fmt.Println(errStatus.Message())
 		// lets print the error code which is `INVALID_ARGUMENT`
-		status_code := grpc.Code(err)
-		fmt.Println(status_code)
+		fmt.Println(errStatus.Code())
 		// Want its int version for some reason?
 		// you shouldn't actullay do this, but if you need for debugging,
 		// you can do `int(status_code)` which will give you `3`
 		//
 		// Want to take specific action based on specific error?
-		if codes.InvalidArgument == status_code {
+		if codes.InvalidArgument == errStatus.Code() {
 			// do your stuff here
 			log.Fatal()
 		}
