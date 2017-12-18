@@ -12,6 +12,10 @@ Check the [`hello.proto`](hello.proto) file to see the gRPC method definitions. 
 
 Each language directories have instructions to generate gRPC methods in respective languages. I assume that you have done the basic [tutorials](http://www.grpc.io/docs/quickstart/).
 
+## Guide
+
+Check this page for quick guide and examples of all languages - [gRPC Errors](http://avi.im/grpc-errors)
+
 ## System Requirements
     
 - [gRPC](https://github.com/grpc/grpc/blob/master/INSTALL.md)
