@@ -8,6 +8,7 @@ import (
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 
 	api "github.com/avinassh/grpc-errors/go/hello"
 )
@@ -20,7 +21,7 @@ func (s *HelloServer) SayHello(ctx context.Context, req *api.HelloReq) (*api.Hel
 
 func (s *HelloServer) SayHelloStrict(ctx context.Context, req *api.HelloReq) (*api.HelloResp, error) {
 	if len(req.GetName()) >= 10 {
-		return nil, grpc.Errorf(codes.InvalidArgument,
+		return nil, status.Errorf(codes.InvalidArgument,
 			"Length of `Name` cannot be more than 10 characters")
 	}
 
