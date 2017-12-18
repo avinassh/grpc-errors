@@ -74,16 +74,16 @@ Check the complete example [here](https://github.com/avinassh/grpc-errors/tree/m
 
 ### Server
 
-To send an error, return `grpc.Errorf` with error message and code:
+To send an error, return `status.Errorf` with error message and code:
 
 ```go
-grpc.Errorf(<grpc error code>, <error message>)
+status.Errorf(<grpc error code>, <error message>)
 ```
 
 Example:
 
 ```go
-return grpc.Errorf(codes.InvalidArgument, "Ouch!")
+return status.Errorf(codes.InvalidArgument, "Ouch!")
 ```
 
 ### Client
@@ -92,7 +92,7 @@ To handle the error, check `error` returned from gRPC call:
 
 ```go
 _, err := client.GRPCMethod(...)
-status_code := grpc.Code(err)
+statusCode := status.FromError(err)
 ```
 
 ## Node
