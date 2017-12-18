@@ -8,4 +8,4 @@ owner_url: "http://avi.im"
 
 # Build settings
 markdown: kramdown
-theme: jekyll-theme-minimal
+theme: jekyll-theme-merlot
