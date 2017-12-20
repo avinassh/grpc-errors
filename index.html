@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=640">
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=df33c55c8971a7a09b115caeca43740f67dd87fd" media="screen">
+    <link rel="stylesheet" href="/assets/css/mobile.css" media="handheld, only screen and (max-device-width:640px)">
+    <link rel="stylesheet" href="/assets/css/non-screen.css" media="handheld, only screen and (max-device-width:640px)">
+
+    <script type="text/javascript" src="/assets/js/modernizr.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/headsmart.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('#main_content').headsmart()
+      })
+    </script>
+    <title>gRPC Errors</title>
+  </head>
+
+  <body>
+    <a id="forkme_banner" href="http://github.com/avinassh/grpc-errors">View on GitHub</a>
+    <div class="shell">
+
+      <header>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <h1 style="text-transform: initial;">gRPC Errors</h1>
+            <h2>A handy guide to gRPC errors</h2>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+      </header>
+
+      
+        <div id="no-downloads">
+          <span class="inner">
+          </span>
+        </div>
+      
+
+
+      <span class="banner-fix"></span>
+
+
+      <section id="main_content">
+        <p>gRPC is an amazing library, however, the documentation lacks details on error handling. The code examples do not contain error handling part either (though few does seem to have them). Some test suits in main repo do have them, but it might be difficult to figure out for a beginner.</p>
+
+<p>This project is my attempt to fix the issue. The <a href="https://github.com/avinassh/grpc-errors">repository</a> contains examples in all popular languages and contain similar implementations of server and client across languages and also, error handling. So you can run server in one language of your choice and client in another, error handling still works seamlessly. The rest of this page shows how to send errors from server, handle them in client, in different languages.</p>
+
+<ul>
+  <li><a href="#c">C++</a></li>
+  <li><a href="#c-1">C#</a></li>
+  <li><a href="#go">Go</a></li>
+  <li><a href="#node">Node</a></li>
+  <li><a href="#objective-c">Objective C</a></li>
+  <li><a href="#python">Python</a></li>
+  <li><a href="#ruby">Ruby</a></li>
+  <li><a href="#swift">Swift</a></li>
+</ul>
+
+<h2 id="c">C++</h2>
+
+<p>Check the complete example <a href="https://github.com/avinassh/grpc-errors/tree/master/cpp">here</a>.</p>
+
+<h3 id="server">Server</h3>
+
+<p>To send an error, return an instance of <code class="highlighter-rouge">grpc::Status</code> with error message and code:</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Status</span><span class="p">(</span><span class="o">&lt;</span><span class="n">grpc</span> <span class="n">error</span> <span class="n">code</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">error</span> <span class="n">message</span><span class="o">&gt;</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>example:</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Status</span><span class="p">(</span><span class="n">StatusCode</span><span class="o">::</span><span class="n">INVALID_ARGUMENT</span><span class="p">,</span> <span class="s">"Ouch!"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="client">Client</h3>
+
+<p>To handle the error, check <code class="highlighter-rouge">error_code</code> and <code class="highlighter-rouge">error_message</code> members of <code class="highlighter-rouge">grpc::Status</code>:</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Status</span> <span class="n">status</span> <span class="o">=</span> <span class="n">stub_</span><span class="o">-&gt;</span><span class="n">GRPCMethod</span><span class="p">(</span><span class="o">&amp;</span><span class="n">context</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">response</span><span class="p">);</span>
+<span class="n">status</span><span class="p">.</span><span class="n">error_message</span><span class="p">();</span>
+<span class="n">status</span><span class="p">.</span><span class="n">error_code</span><span class="p">();</span>
+</code></pre></div></div>
+
+<h2 id="c-1">C#</h2>
+
+<p>Check the complete example <a href="https://github.com/avinassh/grpc-errors/tree/master/csharp">here</a>.</p>
+
+<h3 id="server-1">Server</h3>
+
+<p>To send an error, raise <code class="highlighter-rouge">RpcException</code> with error message and code:</p>
+
+<div class="language-c# highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">RpcException</span><span class="p">(</span><span class="k">new</span> <span class="nf">Status</span><span class="p">(&lt;</span><span class="n">grpc</span> <span class="n">error</span> <span class="n">code</span><span class="p">&gt;,</span> <span class="p">&lt;</span><span class="n">error</span> <span class="n">message</span><span class="p">&gt;));</span>
+</code></pre></div></div>
+
+<p>Example:</p>
+
+<div class="language-c# highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">throw</span> <span class="k">new</span> <span class="nf">RpcException</span><span class="p">(</span><span class="k">new</span> <span class="nf">Status</span><span class="p">(</span><span class="n">StatusCode</span><span class="p">.</span><span class="n">InvalidArgument</span><span class="p">,</span> <span class="s">"Ouch!"</span><span class="p">));</span>
+</code></pre></div></div>
+
+<h3 id="client-1">Client</h3>
+
+<p>To handle the error, catch <code class="highlighter-rouge">RpcException</code> and access its member <code class="highlighter-rouge">Status</code>:</p>
+
+<div class="language-c# highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">catch</span> <span class="p">(</span><span class="n">RpcException</span> <span class="n">e</span><span class="p">){</span>
+    <span class="n">e</span><span class="p">.</span><span class="n">Status</span><span class="p">.</span><span class="n">Detail</span><span class="p">;</span>
+    <span class="n">e</span><span class="p">.</span><span class="n">Status</span><span class="p">.</span><span class="n">StatusCode</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="go">Go</h2>
+
+<p>Check the complete example <a href="https://github.com/avinassh/grpc-errors/tree/master/go">here</a>.</p>
+
+<h3 id="server-2">Server</h3>
+
+<p>To send an error, return <code class="highlighter-rouge">status.Errorf</code> with error message and code:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">status</span><span class="o">.</span><span class="n">Errorf</span><span class="p">(</span><span class="o">&lt;</span><span class="n">grpc</span><span class="x"> </span><span class="kt">error</span><span class="x"> </span><span class="n">code</span><span class="o">&gt;</span><span class="p">,</span><span class="x"> </span><span class="o">&lt;</span><span class="kt">error</span><span class="x"> </span><span class="n">message</span><span class="o">&gt;</span><span class="p">)</span><span class="x">
+</span></code></pre></div></div>
+
+<p>Example:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">return</span><span class="x"> </span><span class="n">status</span><span class="o">.</span><span class="n">Errorf</span><span class="p">(</span><span class="n">codes</span><span class="o">.</span><span class="n">InvalidArgument</span><span class="p">,</span><span class="x"> </span><span class="s">"Ouch!"</span><span class="p">)</span><span class="x">
+</span></code></pre></div></div>
+
+<h3 id="client-2">Client</h3>
+
+<p>To handle the error, check <code class="highlighter-rouge">error</code> returned from gRPC call:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">_</span><span class="p">,</span><span class="x"> </span><span class="n">err</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">client</span><span class="o">.</span><span class="n">GRPCMethod</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="x">
+</span><span class="n">statusCode</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">status</span><span class="o">.</span><span class="n">FromError</span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="x">
+</span></code></pre></div></div>
+
+<h2 id="node">Node</h2>
+
+<p>Check the complete example <a href="https://github.com/avinassh/grpc-errors/tree/master/node">here</a>.</p>
+
+<h3 id="server-3">Server</h3>
+
+<p>To send an error, return with <code class="highlighter-rouge">code</code> and <code class="highlighter-rouge">message</code>:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">return</span> <span class="nx">callback</span><span class="p">({</span>
+    <span class="na">code</span><span class="p">:</span> <span class="o">&lt;</span><span class="nx">grpc</span> <span class="nx">error</span> <span class="nx">code</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="na">message</span><span class="p">:</span> <span class="o">&lt;</span><span class="nx">error</span> <span class="nx">message</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>Example:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">return</span> <span class="nx">callback</span><span class="p">({</span>
+    <span class="na">code</span><span class="p">:</span> <span class="nx">grpc</span><span class="p">.</span><span class="nx">status</span><span class="p">.</span><span class="nx">INVALID_ARGUMENT</span><span class="p">,</span>
+    <span class="na">message</span><span class="p">:</span> <span class="s2">"Ouch!"</span><span class="p">,</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="client-3">Client</h3>
+
+<p>To handle the error, check <code class="highlighter-rouge">error</code> returned from gRPC call:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">client</span><span class="p">.</span><span class="nx">grpcMethod</span><span class="p">({...},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">err</span><span class="p">.</span><span class="nx">message</span><span class="p">;</span>
+    <span class="nx">err</span><span class="p">.</span><span class="nx">code</span><span class="p">;</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h2 id="objective-c">Objective C</h2>
+
+<p>Check the complete example <a href="https://github.com/avinassh/grpc-errors/tree/master/objective-c">here</a>.</p>
+
+<h3 id="client-4">Client</h3>
+
+<p>To handle the error, check <code class="highlighter-rouge">error</code> returned from gRPC call:</p>
+
+<pre><code class="language-obj-c">[client grpcMethod:request handler:^(..., NSError *error) {
+    error.localizedDescription;
+    error.code;
+}];
+</code></pre>
+
+<h2 id="python">Python</h2>
+
+<p>Check the complete example <a href="https://github.com/avinassh/grpc-errors/tree/master/python">here</a>.</p>
+
+<h3 id="server-4">Server</h3>
+
+<p>To send an error, set <code class="highlighter-rouge">code</code> and <code class="highlighter-rouge">details</code> for <code class="highlighter-rouge">context</code> object:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">context</span><span class="o">.</span><span class="n">set_code</span><span class="p">(</span><span class="o">&lt;</span><span class="n">grpc</span> <span class="n">error</span> <span class="n">code</span><span class="o">&gt;</span><span class="p">)</span>
+<span class="n">context</span><span class="o">.</span><span class="n">set_details</span><span class="p">(</span><span class="o">&lt;</span><span class="n">error</span> <span class="n">message</span><span class="o">&gt;</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Example:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">GRPCMethod</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">set_details</span><span class="p">(</span><span class="s">"Ouch!"</span><span class="p">)</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">set_code</span><span class="p">(</span><span class="n">grpc</span><span class="o">.</span><span class="n">StatusCode</span><span class="o">.</span><span class="n">INVALID_ARGUMENT</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">response</span>
+</code></pre></div></div>
+
+<h3 id="client-5">Client</h3>
+
+<p>To handle the error, catch <code class="highlighter-rouge">grpc.RpcError</code> exception:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span><span class="p">:</span>
+    <span class="o">...</span>
+<span class="k">except</span> <span class="n">grpc</span><span class="o">.</span><span class="n">RpcError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="n">e</span><span class="o">.</span><span class="n">details</span><span class="p">()</span>
+    <span class="n">status_code</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">code</span><span class="p">()</span>
+    <span class="n">status_code</span><span class="o">.</span><span class="n">name</span>
+    <span class="n">status_code</span><span class="o">.</span><span class="n">value</span>
+</code></pre></div></div>
+
+<h2 id="ruby">Ruby</h2>
+
+<p>Check the complete example <a href="https://github.com/avinassh/grpc-errors/tree/master/ruby">here</a>.</p>
+
+<h3 id="server-5">Server</h3>
+
+<p>To send an error, raise <code class="highlighter-rouge">GRPC::BadStatus</code> exception with <code class="highlighter-rouge">code</code> and <code class="highlighter-rouge">message</code> details:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">GRPC</span><span class="o">::</span><span class="no">BadStatus</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="o">&lt;</span><span class="n">grpc</span> <span class="n">error</span> <span class="n">code</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">error</span> <span class="n">message</span><span class="o">&gt;</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Example:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">raise</span> <span class="no">GRPC</span><span class="o">::</span><span class="no">BadStatus</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="no">GRPC</span><span class="o">::</span><span class="no">Core</span><span class="o">::</span><span class="no">StatusCodes</span><span class="o">::</span><span class="no">INVALID_ARGUMENT</span><span class="p">,</span> <span class="s2">"Ouch!"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="client-6">Client</h3>
+
+<p>To handle the error, catch <code class="highlighter-rouge">GRPC::BadStatus</code> exception:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">begin</span>
+  <span class="o">...</span>
+<span class="k">rescue</span> <span class="no">GRPC</span><span class="o">::</span><span class="no">BadStatus</span> <span class="o">=&gt;</span> <span class="n">e</span>
+  <span class="n">e</span><span class="p">.</span><span class="nf">details</span>
+  <span class="n">e</span><span class="p">.</span><span class="nf">code</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<h2 id="swift">Swift</h2>
+
+<p>Check the complete example <a href="https://github.com/avinassh/grpc-errors/tree/master/swift">here</a>.</p>
+
+<h3 id="client-7">Client</h3>
+
+<p>To handle the error, check <code class="highlighter-rouge">error</code> returned from gRPC call:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">client</span><span class="o">.</span><span class="nf">grpcMethod</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="nv">handler</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">NSError</span><span class="p">?)</span> <span class="k">in</span>
+    <span class="n">error</span><span class="o">.</span><span class="n">localizedDescription</span><span class="p">;</span>
+    <span class="n">error</span><span class="o">.</span><span class="n">code</span><span class="p">;</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+      </section>
+
+      <footer>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            
+              <p>built by <a style="text-transform: initial;" href="http://avi.im">v</a></p>
+            
+            
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+      </footer>
+
+    </div>
+  </body>
+</html>
