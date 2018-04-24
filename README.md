@@ -10,6 +10,7 @@ This project is my attempt to fix the issue. The [repository](https://github.com
 - [Python](#python)
 - [Ruby](#ruby)
 - [Swift](#swift)
+- [Scala](#scala)
 
 ## C++
 
@@ -226,3 +227,44 @@ client.grpcMethod(request, handler: { (..., error: NSError?) in
     error.code;
 })
 ```
+
+## Scala
+
+Check the complete example [here](https://github.com/avinassh/grpc-errors/tree/master/scala). The example assumes you are using [ScalaPB](https://scalapb.github.io/) which uses grpc-java under the hood but has various conveniences suitable for programming in Scala.
+
+### Server
+
+If in a unary call, you simply use the regular `Future` constructs to denote success and failure. In the case of failures, the best practice is to use the static methods on the `Status` class from the `io.grpc` package and convert that to a `io.grpc.StatusRuntimeException`. According to the documentation, gRPC stubs prefer `StatusRuntimeException` to `StatusException`. 
+
+```scala
+Status
+    .<grpc error code>
+    .augmentDescription(<error message>)
+    .asRuntimeException()
+```
+
+Example:
+
+```scala
+def GRPCMethod(request: Request): Future[Response] = {
+Future.failed(
+    Status
+        .<grpc error code>
+        .augmentDescription(<error message>)
+        .asRuntimeException()
+    )
+}
+```
+
+### Client
+
+To handle the error, if using a blocking stub, you can use any of Scala's standard mechanisms to catch the `Throwable`. Be careful because `StatusException` and `StatusRuntimeException` are Java classes that do not have a common ancestor other than `Exception`. If using the async stub again use the standard constructs provided by Scala Futures.
+
+```scala
+client.grpcMethod(...) onFailure {
+    case ex: StatusRuntimeException =>
+        val desc = ex.getStatus.getDescription
+        val code = ex.getStatus.getCode
+}
+```
+
