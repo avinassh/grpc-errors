@@ -11,3 +11,11 @@ futures = "0.1.25"
 
 [build-dependencies]
 protoc-grpcio = "0.3.1"
+
+[[bin]]
+name = "server"
+path = "src/server.rs"
+
+[[bin]]
+name = "client"
+path = "src/client.rs"
