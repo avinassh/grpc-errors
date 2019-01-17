@@ -1,0 +1,21 @@
+[package]
+name = "rust"
+version = "0.1.0"
+authors = ["Rodolphe Marques <marques.rodolphe@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+grpcio = { version = "0.4.1", default-features = false, features = ["protobuf-codec"] }
+protobuf = "2.0.2"
+futures = "0.1.25"
+
+[build-dependencies]
+protoc-grpcio = "0.3.1"
+
+[[bin]]
+name = "server"
+path = "src/server.rs"
+
+[[bin]]
+name = "client"
+path = "src/client.rs"
