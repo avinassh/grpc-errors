@@ -11,6 +11,7 @@ This project is my attempt to fix the issue. The [repository](https://github.com
 - [Ruby](#ruby)
 - [Swift](#swift)
 - [Scala](#scala)
+- [Rust](#rust)
 
 ## C++
 
@@ -265,6 +266,54 @@ client.grpcMethod(...) onFailure {
     case ex: StatusRuntimeException =>
         val desc = ex.getStatus.getDescription
         val code = ex.getStatus.getCode
+}
+```
+
+## Rust
+
+Check the complete example
+[here](https://github.com/avinassh/grpc-errors/tree/master/rust). The example
+assumes we are using [grpcio](https://docs.rs/grpcio/0.4.2/grpcio/).
+
+### Server
+
+[grpcio](https://docs.rs/grpcio/0.4.2/grpcio/) uses
+[`futures::sink::Sink`](https://rust-lang-nursery.github.io/futures-api-docs/0.3.0-alpha.12/futures/sink/trait.Sink.html)
+to send values asynchronously.
+
+To send an error simply call the
+[`fail`](https://docs.rs/grpcio/0.4.2/grpcio/struct.UnarySink.html#method.fail)
+method on the _sink_ with an instance of [`grpcio::RpcStatus`](https://docs.rs/grpcio/0.4.2/grpcio/struct.RpcStatus.html).
+
+Example:
+
+```rust
+let future = sink
+    .fail(RpcStatus::new(
+        RpcStatusCode::InvalidArgument,
+        Some("Ouch!".to_owned()),
+    ));
+```
+
+### Client
+
+To handle the error, check the
+[`Result`](https://docs.rs/grpcio/0.4.2/grpcio/type.Result.html) returned by
+the method
+[call](https://docs.rs/grpcio/0.4.2/grpcio/struct.Client.html#method.unary_call)
+for an [`grpcio::Error`](https://docs.rs/grpcio/0.4.2/grpcio/enum.Error.html).
+
+```rust
+let reply = client.GRPCMethod(&request);
+
+match reply {
+    Err(Error::RpcFailure(e)) => {
+        assert_eq!(e.status, RpcStatusCode::InvalidArgument);
+        assert_eq!(e.details, Some("Ouch!".to_owned()));
+    },
+    Ok(reply) => {
+        // ...
+    }
 }
 ```
 
