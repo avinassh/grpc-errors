@@ -9,9 +9,10 @@ This project is my attempt to fix the issue. The [repository](https://github.com
 - [Objective C](#objective-c)
 - [Python](#python)
 - [Ruby](#ruby)
+- [Rust](#rust)
 - [Swift](#swift)
 - [Scala](#scala)
-- [Rust](#rust)
+
 
 ## C++
 
