@@ -2,6 +2,9 @@ import time
 from concurrent import futures
 
 import grpc
+from google.rpc import status_pb2, code_pb2
+from google.protobuf import any_pb2
+from grpc_status import rpc_status
 
 import hello_pb2
 import hello_pb2_grpc
@@ -23,6 +26,25 @@ class HelloServicer(hello_pb2_grpc.HelloServiceServicer):
 
         return hello_pb2.HelloResp(Result="Hey, {}!".format(request.Name))
 
+    def SayHelloAdvanced(self, request, context):
+        if len(request.Name) >= 10:
+            # with the error, you can also send any proto object as metadata. We will use the one we defined in the
+            # proto definition
+            # so create an api.Error obj and send that along with the error.
+            desc = F"Your name contains {len(request.Name)} characters, but you cannot use more than 10 characters in this API request"
+            my_err = hello_pb2.Error(Description=desc)
+            # we need to wrap our obj in any.Any object
+            detail = any_pb2.Any()
+            detail.Pack(my_err)
+            err_status = status_pb2.Status(
+                code=code_pb2.INVALID_ARGUMENT,
+                message='Length of `Name` cannot be more than 10 characters',
+                details=[detail],
+            )
+            context.abort_with_status(rpc_status.to_status(err_status))
+            return hello_pb2.HelloResp()
+
+        return hello_pb2.HelloResp(Result="Hey, {}!".format(request.Name))
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
