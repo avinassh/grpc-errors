@@ -66,8 +66,9 @@ func main() {
 		// now lets get the advanced error info!
 		for _, d := range errStatus.Details() {
 			switch errProto := d.(type) {
+			// in some languages, you may need to unwrap the obj from an any.Any. However, Go grpc lib have done that already for us
 			case *api.Error:
-				// this will print the error desc
+				// following prints the error desc, "Your name contains 14 characters, ..."
 				fmt.Println(errProto.Description)
 			default:
 				log.Fatal("Unexpected type: ", errProto)
