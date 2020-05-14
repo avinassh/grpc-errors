@@ -28,6 +28,24 @@ func (s *HelloServer) SayHelloStrict(ctx context.Context, req *api.HelloReq) (*a
 	return &api.HelloResp{Result: fmt.Sprintf("Hey, %s!", req.GetName())}, nil
 }
 
+func (s *HelloServer) SayHelloAdvanced(ctx context.Context, req *api.HelloReq) (*api.HelloResp, error) {
+	if len(req.GetName()) >= 10 {
+		// with the error, you can also send any proto object as metadata. We will use the one we defined in the
+		// proto definition
+		// so create an api.Error obj and send that along with the error.
+		detail := &api.Error{
+			Description: fmt.Sprintf("Your name contains %d characters, but you cannot use more than 10 characters in this API request", len(req.Name)),
+		}
+		st := status.New(codes.InvalidArgument, "Length of `Name` cannot be more than 10 characters")
+		// following attaches the extra error metadata to the error
+		// in other languages, you may need to wrap the obj within an any.Any. Following `WithDetails` method does that
+		// for us
+		st, _ = st.WithDetails(detail)
+		return nil, st.Err()
+	}
+	return &api.HelloResp{Result: fmt.Sprintf("Hey, %s!", req.GetName())}, nil
+}
+
 func Serve() {
 	addr := fmt.Sprintf(":%d", 50051)
 	conn, err := net.Listen("tcp", addr)

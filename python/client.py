@@ -1,4 +1,6 @@
 import grpc
+from grpc_status import rpc_status
+from google.rpc import error_details_pb2
 
 import hello_pb2
 import hello_pb2_grpc
@@ -30,6 +32,29 @@ def run():
         if grpc.StatusCode.INVALID_ARGUMENT == status_code:
             # do your stuff here
             pass
+    else:
+        print(response.Result)
+
+    try:
+        response = stub.SayHelloAdvanced(hello_pb2.HelloReq(
+            Name='Leonhard Euler'))
+    except grpc.RpcError as e:
+        # this is advanced error handling. Everything works exactly like the previous example, but in this one you also
+        # get extra error information
+        print(e.details())
+        status_code = e.code()
+        # should print `INVALID_ARGUMENT`
+        print(status_code.name)
+        # now lets get the advanced error info!
+        status = rpc_status.from_call(e)
+        for detail in status.details:
+            if detail.Is(hello_pb2.Error.DESCRIPTOR):
+                err_proto = hello_pb2.Error()
+                detail.Unpack(err_proto)
+                # following prints the error desc, "Your name contains 14 characters, ..."
+                print(err_proto.Description)
+            else:
+                raise RuntimeError('Unexpected type: %s' % detail)
     else:
         print(response.Result)
 

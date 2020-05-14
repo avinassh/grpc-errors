@@ -9,6 +9,8 @@ service HelloService {
     // Strict Version responds only to requests which have `Name` length
     // less than 10 characters
     rpc SayHelloStrict(HelloReq) returns (HelloResp) {};
+    // Same like previous one, but returns an advanced error, an instance of Error message defined below
+    rpc SayHelloAdvanced(HelloReq) returns (HelloResp) {};
 }
 
 message HelloReq {
@@ -17,4 +19,8 @@ message HelloReq {
 
 message HelloResp {
     string Result = 1;
+}
+
+message Error {
+    string Description = 1;
 }
