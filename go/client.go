@@ -48,9 +48,31 @@ func main() {
 		// Want to take specific action based on specific error?
 		if codes.InvalidArgument == errStatus.Code() {
 			// do your stuff here
-			log.Fatal()
 		}
 	}
 
+	resp, err = c.SayHelloAdvanced(
+		context.Background(),
+		&api.HelloReq{Name: "Leonhard Euler"},
+	)
+
+	if err != nil {
+		// this is advanced error handling. Everything works exactly like the previous example, but in this one you also
+		// get extra error information
+		errStatus, _ := status.FromError(err)
+		fmt.Println(errStatus.Message())
+		// lets print the error code which is `INVALID_ARGUMENT`
+		fmt.Println(errStatus.Code())
+		// now lets get the advanced error info!
+		for _, d := range errStatus.Details() {
+			switch errProto := d.(type) {
+			case *api.Error:
+				// this will print the error desc
+				fmt.Println(errProto.Description)
+			default:
+				log.Fatal("Unexpected type: ", errProto)
+			}
+		}
+	}
 	fmt.Println(resp.GetResult())
 }
