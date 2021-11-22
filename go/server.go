@@ -13,7 +13,9 @@ import (
 	api "github.com/avinassh/grpc-errors/go/hello"
 )
 
-type HelloServer struct{}
+type HelloServer struct {
+	api.UnimplementedHelloServiceServer
+}
 
 func (s *HelloServer) SayHello(ctx context.Context, req *api.HelloReq) (*api.HelloResp, error) {
 	return &api.HelloResp{Result: fmt.Sprintf("Hey, %s!", req.GetName())}, nil
