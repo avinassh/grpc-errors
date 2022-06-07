@@ -6,7 +6,7 @@ edition = "2018"
 
 [dependencies]
 grpcio = { version = "0.4.1", default-features = false, features = ["protobuf-codec"] }
-protobuf = "2.0.2"
+protobuf = "3.0.3"
 futures = "0.1.25"
 
 [build-dependencies]
